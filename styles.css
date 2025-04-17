@@ -1,9 +1,10 @@
 .bar:hover {
   fill: aqua;
 }
-#tooltip {
-  visibility: false;
+#title {
+  text-align: center;
 }
-#tooltip:hover {
-  visibility: true;
+.graph {
+  display: block;
+  margin: auto;
 }

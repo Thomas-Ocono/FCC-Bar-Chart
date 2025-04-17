@@ -304,6 +304,7 @@ svg
 const svg = d3
   .select("body")
   .append("svg")
+  .attr("class", "graph")
   .attr("width", w)
   .attr("height", h)
   .attr("style", "outline: solid black");
@@ -349,6 +350,16 @@ svg
   .call(yAxis)
   .attr("transform", "translate(" + padding + ", 0)");
 
+let tooltip = d3
+  .select("body")
+  .append("div")
+  .attr("id", "tooltip")
+  .style("visibility", "hidden")
+  .style("width", "auto")
+  .style("height", "auto")
+  .style("text-align", "center")
+  .style("padding-top", "10px");
+
 svg
   .selectAll("rect")
   .data(data)
@@ -360,4 +371,12 @@ svg
   .attr("width", (w - 2 * padding) / data.length)
   .attr("height", (d) => yScale(d[1]))
   .attr("x", (d, i) => xScale(i))
-  .attr("y", (d) => h - padding - yScale(d[1]));
+  .attr("y", (d) => h - padding - yScale(d[1]))
+  .on("mouseover", (d) => {
+    tooltip.transition().style("visibility", "visible");
+    tooltip.text("Date - " + d[0]);
+    document.querySelector("#tooltip").setAttribute("data-date", d[0]);
+  })
+  .on("mouseout", (d) => {
+    tooltip.transition().style("visibility", "hidden");
+  });
