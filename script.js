@@ -277,10 +277,11 @@ const data = [
 ];
 
 const test = [25, 30, 75, 10, 30, 102, 15, 83, 29, 30, 10, 84, 30];
-const w = 500;
-const h = 200;
-
-/*const svg = d3
+const w = 1000;
+const h = 500;
+const padding = 50;
+/*
+const svg = d3
   .select("body")
   .append("svg")
   .attr("width", w)
@@ -303,18 +304,56 @@ svg
 const svg = d3
   .select("body")
   .append("svg")
-  .attr("width", 1000)
-  .attr("height", 500)
+  .attr("width", w)
+  .attr("height", h)
   .attr("style", "outline: solid black");
 
+let yScale = d3
+  .scaleLinear()
+  .domain([0, d3.max(data[1])])
+  .range([0, h - 2 * padding]);
+
+let xScale = d3
+  .scaleLinear()
+  .domain([0, data.length - 1])
+  .range([padding, w - padding]);
+
+let datesArray = data.map((d) => {
+  return new Date(d[0]);
+});
+
+let xAxisScale = d3
+  .scaleTime()
+  .domain([d3.min(datesArray), d3.max(datesArray)])
+  .range([padding, w - padding]);
+
+let gdpArray = data.map((d) => {
+  return d[1];
+});
+console.log(gdpArray);
+
+let yAxisScale = d3
+  .scaleLinear()
+  .domain([0, d3.max(gdpArray)])
+  .range([h - padding, padding]);
+
+console.log(data[0][1]);
+
+let xAxis = d3.axisBottom(xAxisScale);
 svg
   .append("g")
   .attr("id", "x-axis")
-  .append("text")
-  .text("x-axis")
-  .attr("style", "font-size:1.5rem")
-  .attr("y", 100);
-svg.append("g").attr("id", "y-axis");
+  .call(xAxis)
+  .attr("transform", "translate(0, " + (h - padding) + ")");
+
+let yAxis = d3.axisLeft(yAxisScale);
+svg
+  .append("g")
+  .attr("id", "y-axis")
+  .call(yAxis)
+  .attr("transform", "translate(" + padding + ", 0)");
+
+/*
 svg
   .selectAll("rect")
   .data(data)
@@ -327,4 +366,9 @@ svg
   .attr("width", (d, i) => 1000 / data.length)
   .attr("x", (d, i) => (i * 1000) / data.length)
   .attr("y", (d, i) => 500 - d[1] / 35)
-  .attr("fill", "blue");
+  .attr("fill", "blue")
+  .append("title")
+  .attr("id", "tooltip")
+  .attr("data-date", (d) => d[0])
+  .text((d) => "Data-Date: " + d[0] + " Data Value: " + d[1]);
+  */

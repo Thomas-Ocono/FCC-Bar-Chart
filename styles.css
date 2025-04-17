@@ -1,0 +1,9 @@
+.bar:hover {
+  fill: aqua;
+}
+#tooltip {
+  visibility: false;
+}
+#tooltip:hover {
+  visibility: true;
+}
