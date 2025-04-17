@@ -280,7 +280,7 @@ const test = [25, 30, 75, 10, 30, 102, 15, 83, 29, 30, 10, 84, 30];
 const w = 500;
 const h = 200;
 
-const svg = d3
+/*const svg = d3
   .select("body")
   .append("svg")
   .attr("width", w)
@@ -298,3 +298,33 @@ svg
   .attr("y", (d, i) => h - d)
   .attr("fill", "white")
   .attr("style", "outline: thin solid black");
+*/
+
+const svg = d3
+  .select("body")
+  .append("svg")
+  .attr("width", 1000)
+  .attr("height", 500)
+  .attr("style", "outline: solid black");
+
+svg
+  .append("g")
+  .attr("id", "x-axis")
+  .append("text")
+  .text("x-axis")
+  .attr("style", "font-size:1.5rem")
+  .attr("y", 100);
+svg.append("g").attr("id", "y-axis");
+svg
+  .selectAll("rect")
+  .data(data)
+  .enter()
+  .append("rect")
+  .attr("data-date", (d) => d[0])
+  .attr("data-gdp", (d) => d[1])
+  .attr("class", "bar")
+  .attr("height", (d) => d[1] / 35)
+  .attr("width", (d, i) => 1000 / data.length)
+  .attr("x", (d, i) => (i * 1000) / data.length)
+  .attr("y", (d, i) => 500 - d[1] / 35)
+  .attr("fill", "blue");
