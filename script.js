@@ -275,30 +275,26 @@ const data = [
   ["2015-04-01", 17913.7],
   ["2015-07-01", 18064.7],
 ];
-/*
-d3.select("body")
-  .selectAll("h1")
-  .data(data)
-  .enter()
-  .append("h2")
-  .text((d) => d[0] + " : " + d[1]);
-*/
+
+const test = [25, 30, 75, 10, 30, 102, 15, 83, 29, 30, 10, 84, 30];
+const w = 500;
+const h = 200;
+
 const svg = d3
   .select("body")
   .append("svg")
-  .attr("width", 500)
-  .attr("height", 100);
+  .attr("width", w)
+  .attr("height", h)
+  .attr("style", "outline: solid black");
 
 svg
   .selectAll("rect")
-  .data(data)
+  .data(test)
   .enter()
   .append("rect")
-  .attr("x", (d, i) => {
-    return i * 20;
-  })
-  .attr("y", (d, i) => {
-    return d[1];
-  })
-  .attr("width", 3)
-  .attr("height", 20);
+  .attr("height", (d) => d)
+  .attr("width", (d, i) => w / test.length)
+  .attr("x", (d, i) => (i * w) / test.length)
+  .attr("y", (d, i) => h - d)
+  .attr("fill", "white")
+  .attr("style", "outline: thin solid black");
